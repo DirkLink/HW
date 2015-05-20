@@ -18,7 +18,8 @@ require 'minitest/autorun'
 require 'pry'
 
 class Register
-  def initialize amount
+  def initialize amount, coins_available
+    @coins_available = coins_available
     @amount = amount
     @change_array = [0,0,0,0]
   end
@@ -26,34 +27,54 @@ class Register
   def quarter
    @amount -= 0.25
    @change_array[0] += 1
+   @coins_available[0] -= 1
   end
 
   def dime
     @amount -= 0.10
     @change_array[1] += 1
+    @coins_available[1] -= 1
   end
     
   def knickel
     @amount -= 0.05
     @change_array[2] += 1
+    @coins_available[2] -= 1
   end
 
   def penny
     @amount -= 0.01
     @change_array[3] += 1
+    @coins_available[3] -= 1
   end
   def change
     until @amount <= 0.24 do
-      self.quarter
+      if @coins_available[0] > 0
+        self.quarter
+      else
+        break
+      end
     end
     until @amount <= 0.09 do
-      self.dime
+      if @coins_available[1] > 0
+        self.dime
+      else
+        break
+      end
     end
     until @amount <= 0.04 do
-      self.knickel
+      if @coins_available[2] > 0
+        self.knickel
+      else
+        break
+      end
     end
-    until @amount < 0.0001 do
-      self.penny
+    until @amount <= 0.0005 do
+      if @coins_available[3] > 0
+        self.penny
+      else 
+        break
+      end
     end
     return @change_array
   end
@@ -62,16 +83,20 @@ end
 
 class RegisterTest < Minitest::Test
   def test_99
-    r = Register.new(0.99)
-    assert_equal r.change, [3,2,0,4]
+    r = Register.new(0.99 ,[3,2,1,5])
+    assert_equal [3,2,0,4], r.change
   end
 
   def test_1
-    r = Register.new(0.01)
-    assert_equal r.change, [0,0,0,1]
+    r = Register.new(0.01, [1,1,1,1])
+    assert_equal [0,0,0,1], r.change
   end
-  def test_50
-    r = Register.new(0.50)
-    assert_equal r.change, [2,0,0,0]
+  def test_50_limited_coins
+    r = Register.new(0.50,[1,1,1,100])
+    assert_equal [1,1,1,10], r.change
+  end
+  def test_500_limited_coins
+    r = Register.new(5.0, [0,1,5,1])
+    assert_equal [0,1,5,1], r.change
   end
 end
