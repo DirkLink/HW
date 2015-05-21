@@ -5,7 +5,7 @@ class HangmanGame
   def initialize
     @word = File.read("wordlist.txt").split(" ").sample
     @answer = @word
-    @tries = 5
+    @tries = 10
     @answer_array = @answer.chars
     @length = @answer_array.length
      @guess_array= Array.new(@length).map {|x| x="_"}
