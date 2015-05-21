@@ -6,7 +6,7 @@ game = HangmanGame.new
 game.printout
 class Player
   def get_guess
-    puts "Guess a letter >"
+    print "Guess a letter >"
     guess = gets.chomp
     return guess
   end
@@ -15,7 +15,8 @@ end
 player = Player.new
 until game.over?
   guess = player.get_guess
-  result = game.check_guess
+  game.check_guess guess
+  game.printout
 end
 #Compare the guess
 #Fill in if that letter exists
