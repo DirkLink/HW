@@ -39,4 +39,5 @@ end
                   ((____   ----
                       /  /
                       (_(( ")
+            puts"The word was: #{game.answer}" 
         end

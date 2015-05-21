@@ -1,11 +1,11 @@
 require 'pry'
 
 class HangmanGame
-
+  attr_reader :answer
   def initialize
     @word = File.read("wordlist.txt").split(" ").sample
     @answer = @word
-    @tries = 10
+    @tries = 6
     @answer_array = @answer.chars
     @length = @answer_array.length
      @guess_array= Array.new(@length).map {|x| x="_"}
@@ -13,6 +13,7 @@ class HangmanGame
     @guessed = []
   end
   
+
   def over?
     #@user_has_won || @tries.zero?
     won? || lost?
