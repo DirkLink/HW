@@ -1,13 +1,16 @@
 require 'pry'
 
 class HangmanGame
+
   def initialize
-    @answer = "test"
-    @tries = 10
+    @word = File.read("wordlist.txt").split(" ").sample
+    @answer = @word
+    @tries = 5
     @answer_array = @answer.chars
     @length = @answer_array.length
-    @guess_array = Array.new(@length).map {|x| x="_"}
+     @guess_array= Array.new(@length).map {|x| x="_"}
     @user_has_won = false
+    @guessed = []
   end
   
   def over?
@@ -32,6 +35,7 @@ class HangmanGame
     end
     if @answer_array.include?(guess) == false
       @tries -= 1
+      @guessed.push guess
     end
     if @guess_array.include?("_") == false
       @user_has_won = true
@@ -41,6 +45,9 @@ class HangmanGame
 
   def printout
     puts @guess_array.join(" ")
+    puts "You have #{@tries} guesses remaining"
+    @guessed_string = @guessed.join(" ")
+    puts "You have guessed: #{@guessed_string}"
   end
 
 end

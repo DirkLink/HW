@@ -18,6 +18,25 @@ until game.over?
   game.check_guess guess
   game.printout
 end
-#Compare the guess
-#Fill in if that letter exists
-#Print out the letters again
+
+
+ if game.won?
+        puts "You did it!"
+        puts("            
+            /(|
+            (  :
+           __|  |  
+       (____)  `|
+      (____)|   |
+       (____).__|
+        (___)__.|")
+         else
+          print" You failed"
+          puts("
+                  (( ____  |
+                  (( _____  |
+                  ((_____    |
+                  ((____   ----
+                      /  /
+                      (_(( ")
+        end
