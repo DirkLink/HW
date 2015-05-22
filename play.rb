@@ -16,6 +16,7 @@ player = Player.new
 until game.over?
   guess = player.get_guess
   game.check_guess guess
+  system "clear"
   game.printout
 end
 
