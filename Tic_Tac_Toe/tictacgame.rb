@@ -6,7 +6,7 @@ class TicTacToeGame
     @board = [0,1,2,3,4,5,6,7,8]
     @match = false
     @tie = false
-  end
+  end   
   
 
   def over?
@@ -60,16 +60,22 @@ class TicTacToeGame
       @match = true
     end
     
-    if @board.any? {|x| x.is_a? Integer}
-      if @match == true
+    if @board.any? {|x| x.is_a? Integer} && @match == true
         if player_symbol == "X"
           @player1_has_won = true
         elsif player_symbol == "O"       
           @player2_has_won = true
         end
-      end
     elsif !@board.any? {|x| x.is_a? Integer}
-        @tie = true
+        if player_symbol == "X"
+          @player1_has_won = true
+        elsif player_symbol == "O"       
+          @player2_has_won = true
+        end
+    elsif !@board.any? {|x| x.is_a? Integer}
+        if @match == false
+          @tie = true
+        end
     end
   end
 
