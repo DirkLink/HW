@@ -40,7 +40,6 @@ class TestDeck < Minitest::Test
     drawn_card = deck.draw
     assert_equal deck.cards.count, 51
     refute_includes deck.cards, drawn_card
-    binding.pry
     assert_includes deck.drawn, drawn_card
   end
 end
