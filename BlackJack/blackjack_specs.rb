@@ -1,6 +1,9 @@
 require './blackjack'
 require 'minitest/autorun'
 require 'pry'
+require "minitest/reporters"
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
  
 class TestCard < Minitest::Test
   def test_number_card_value
