@@ -15,7 +15,6 @@ class Card
       @value
     end
   end
-
 end
 
 class Deck
@@ -31,6 +30,7 @@ attr_reader :cards, :drawn
         @cards.push(card)
       end
     end
+    @cards.shuffle!
   end
  
 
@@ -65,21 +65,13 @@ class Hand
   end
 
   def has_ace?
-    @cards_in_hand.each do |card|
-      if card.face_value == :A
-        return true
-      else
-        return false
-      end
-    end
+    @cards_in_hand.any? do |card|
+      card.face_value == :A
+     end
   end
 
   def busted?
-    if value > 21
-      return true
-    else
-      return false
-    end
+    value > 21
   end
 
   def blackjack?
@@ -99,7 +91,7 @@ class Hand
     @cards_in_hand.each do |card|
       @string_array.push(card.face_value.to_s,card.suit.to_s)
     end
-    @string_array = @string_array.each_slice(2).map { |a| p a.join }
+    @string_array = @string_array.each_slice(2).map { |a| a.join }
     @string_array.join(", ")
   end
 end
