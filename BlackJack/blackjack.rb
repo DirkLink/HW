@@ -1,6 +1,6 @@
 require 'pry'
 class Card
-  attr_reader :face_value
+  attr_reader :face_value, :suit
   def initialize value, suit
    @value = value
    @suit = suit
@@ -45,11 +45,13 @@ class Hand
   def initialize
     @cards_in_hand = []
   end
+
   def add *cards
     cards.each do |card|
       @cards_in_hand.push(card)
     end
   end
+
   def value
     @hand_value = 0
     @cards_in_hand.each do |card|
@@ -61,6 +63,7 @@ class Hand
       @hand_value
     end
   end
+
   def has_ace?
     @cards_in_hand.each do |card|
       if card.face_value == :A
@@ -70,6 +73,7 @@ class Hand
       end
     end
   end
+
   def busted?
     if value > 21
       return true
@@ -90,4 +94,12 @@ class Hand
     end
   end
 
+  def to_s
+    @string_array = []
+    @cards_in_hand.each do |card|
+      @string_array.push(card.face_value.to_s,card.suit.to_s)
+    end
+    @string_array = @string_array.each_slice(2).map { |a| p a.join }
+    @string_array.join(", ")
+  end
 end
