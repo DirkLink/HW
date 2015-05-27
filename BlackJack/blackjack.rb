@@ -105,4 +105,5 @@ class Hand
     @cards = @cards_in_hand
     @cards.map { |card| card.to_s }.join(", ")
   end
+
 end
