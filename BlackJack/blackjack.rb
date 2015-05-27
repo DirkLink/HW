@@ -1,4 +1,15 @@
 require 'pry'
+
+class Player
+  attr_reader :name
+  
+  def initialize name
+    @name = name
+    @player_won = false
+  end
+
+end
+
 class Card
   attr_reader :face_value, :suit
   def initialize value, suit
@@ -14,6 +25,10 @@ class Card
     else
       @value
     end
+  end
+
+  def to_s
+    return "#{@face_value}#{@suit}"
   end
 end
 
@@ -87,11 +102,7 @@ class Hand
   end
 
   def to_s
-    @string_array = []
-    @cards_in_hand.each do |card|
-      @string_array.push(card.face_value.to_s,card.suit.to_s)
-    end
-    @string_array = @string_array.each_slice(2).map { |a| a.join }
-    @string_array.join(", ")
+    @cards = @cards_in_hand
+    @cards.map { |card| card.to_s }.join(", ")
   end
 end
