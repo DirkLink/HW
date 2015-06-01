@@ -1,0 +1,56 @@
+How many users are there?
+  select count(*) from users; 
+  49
+
+What are the 5 most expensive items?
+  select * from items order by price desc limit 5;
+  id          name                    price       category
+----------  ----------------------  ----------  ----------------
+9           Gorgeous Plastic Pants  99.44       Books & Outdoors
+20          Intelligent Cotton Com  90.96       Movies, Tools &
+8           Small Concrete Pants    90.32       Garden & Grocery
+31          Gorgeous Granite Pants  90.24       Jewelery, Books
+17          Rustic Concrete Pants   87.53       Electronics
+
+What's the cheapest electronics item?
+select * from items where category like '%electronic%' order by price asc limit 1;
+id          name                    price       category
+----------  ----------------------  ----------  --------------------
+12          Intelligent Wooden Car  18.48       Electronics & Movies
+
+Who lives at "489 Fritsch Island"? Do they have another address?
+select * from addresses join users on users.id=addresses.user_id  where street= "489 Fritsch Island";
+id          user_id     street              city         state       zip         id          first_name  last_name   email
+----------  ----------  ------------------  -----------  ----------  ----------  ----------  ----------  ----------  ----------------------------
+38          35          489 Fritsch Island  New Jessyca  California  10586       35          Marty       Schmidt     jimmy.watsica@purdykiehn.net
+
+select * from addresses where user_id = 35;
+id          user_id     street               city            state       zip
+----------  ----------  -------------------  --------------  ----------  ----------
+37          35          84642 Bosco Orchard  East Devanland  Maryland    97375
+38          35          489 Fritsch Island   New Jessyca     California  10586
+
+Correct Tevin Mitchell's New York zip code to 10108.
+update addresses set zip = "10108" where id = "26";
+
+How much would it cost to buy one of each piece of jewelery?
+select sum(price) from items where category like '%Jewelery%';
+sum(price)
+----------
+226.26
+
+How many total items did we sell?
+select sum(quantity) from orders;
+sum(quantity)
+-------------
+817
+
+How much was spent on health?
+select sum(quantity*items.price) from orders join items on orders.item_id=items.id  where category = "Health";
+sum(quantity*items.price)
+-------------------------
+1796.2
+
+Simulate buying an item by inserting a User for yourself and an Order for that User (do not include this in the figures above).
+insert into users (id, first_name, last_name, email) values (null, "Dirk", "Link", "dlink87@gmail.com");
+insert into orders (id, user_id, item_id, quantity) values (null, 51, 1, 5);
