@@ -13,7 +13,6 @@ while play do
   end
   player.new_hand
   dealer.new_hand
-binding.pry
   if deck.cards.count < 50
     deck = Deck.new
   end
