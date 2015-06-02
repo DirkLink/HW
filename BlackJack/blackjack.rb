@@ -1,13 +1,64 @@
 require 'pry'
 
 class Player
-  attr_reader :name
+  attr_reader :name, :hand, :wallet
   
-  def initialize name
+  def initialize name= nil
     @name = name
     @player_won = false
+    @wallet = 500
+    @push = false
   end
 
+  def new_hand
+    @hand = Hand.new
+  end
+
+  def check_hands dealer_hand
+    if hand.busted?
+      # show_table_without_dealer_value player, dealer
+      puts "Player Busted!"
+      @player_won = false
+    elsif dealer_hand.busted?
+      # show_table_with_dealer_value player, dealer
+      puts "Dealer Busted!"
+      @player_won = true
+    elsif dealer_hand.value == hand.value
+      # show_table_with_dealer_value player, dealer
+      @push = true
+      puts "Push!"
+    elsif dealer_hand.value > hand.value
+      @player_won= false
+      puts "Dealer wins!"
+    elsif dealer_hand.value < hand.value
+      @player_won = true
+      puts "Player wins!"
+    end
+  end
+
+  def get_bet
+    puts "Available cash: #{@wallet}"
+    print "Place your bet >"
+    @bet = gets.chomp.to_i
+    if @bet > 0 && @bet <= @wallet
+      return true
+    else
+      puts "Invalid bet"
+      return false
+    end
+  end
+
+  def change_wallet
+    if @player_won == true
+      @wallet += @bet
+    elsif @player_won == false && @push == false
+      @wallet -= @bet
+    end  
+  end
+
+  def deal deck
+    @hand.add(deck.draw)
+  end
 end
 
 class Card
@@ -45,6 +96,7 @@ attr_reader :cards, :drawn
         @cards.push(card)
       end
     end
+    @cards = @cards*6
     @cards.shuffle!
   end
  
